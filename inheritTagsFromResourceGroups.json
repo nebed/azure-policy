@@ -1,0 +1,96 @@
+{
+  "mode": "Indexed",
+  "policyRule": {
+    "if": {
+      "anyOf": [
+        {
+          "allOf": [
+            {
+              "exists": "false",
+              "field": "[concat('tags[', parameters('tagName1'), ']')]"
+            },
+            {
+              "notEquals": "",
+              "value": "[resourceGroup().tags[parameters('tagName1')]]"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "exists": "false",
+              "field": "[concat('tags[', parameters('tagName2'), ']')]"
+            },
+            {
+              "notEquals": "",
+              "value": "[resourceGroup().tags[parameters('tagName2')]]"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "exists": "false",
+              "field": "[concat('tags[', parameters('tagName3'), ']')]"
+            },
+            {
+              "notEquals": "",
+              "value": "[resourceGroup().tags[parameters('tagName3')]]"
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "details": {
+        "operations": [
+          {
+            "field": "[concat('tags[', parameters('tagName1'), ']')]",
+            "operation": "addOrReplace",
+            "value": "[resourceGroup().tags[parameters('tagName1')]]"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName2'), ']')]",
+            "operation": "addOrReplace",
+            "value": "[resourceGroup().tags[parameters('tagName2')]]"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName3'), ']')]",
+            "operation": "addOrReplace",
+            "value": "[resourceGroup().tags[parameters('tagName3')]]"
+          }
+        ],
+        "roleDefinitionIds": [
+          "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+        ]
+      },
+      "effect": "modify"
+    }
+  },
+  "parameters": {
+    "tagName1": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag Name 1",
+        "description": "Name of the tag, such as 'environment'"
+      },
+      "defaultValue": "customer"
+    },
+    "tagName2": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag Name 2",
+        "description": "Name of the tag, such as 'environment'"
+      },
+      "defaultValue": "environment"
+    },
+    "tagName3": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag Name 3",
+        "description": "Name of the tag, such as 'environment'"
+      },
+      "defaultValue": "product"
+    }
+  }
+}

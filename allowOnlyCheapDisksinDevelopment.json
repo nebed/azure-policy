@@ -1,0 +1,29 @@
+{
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "equals": "Microsoft.Compute/disks",
+          "field": "type"
+        },
+        {
+          "value": "[resourceGroup().tags['environment']]",
+          "equals": "development"
+        },
+        {
+          "not": {
+            "field": "Microsoft.Compute/disks/sku.name",
+            "in": [
+              "Standard_LRS"
+            ]
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "parameters": {}
+}

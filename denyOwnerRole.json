@@ -1,0 +1,21 @@
+{
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "contains": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+          "field": "Microsoft.Authorization/roleAssignments/roleDefinitionId"
+        },
+        {
+          "equals": "Microsoft.Authorization/roleAssignments",
+          "field": "type"
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "parameters": {}
+}

@@ -1,0 +1,91 @@
+{
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "equals": "Microsoft.Resources/subscriptions/resourceGroups",
+          "field": "type"
+        },
+        {
+          "anyOf": [
+            {
+              "exists": "false",
+              "field": "tags['customer']"
+            },
+            {
+              "field": "tags['environment']",
+              "notIn": "[parameters('environments')]"
+            },
+            {
+              "field": "tags['budget']",
+              "notIn": "[parameters('budgets')]"
+            },
+            {
+              "field": "tags['cost_type']",
+              "notIn": "[parameters('cost_types')]"
+            },
+            {
+              "field": "tags['product']",
+              "notIn": "[parameters('products')]"
+            },
+            {
+              "exists": "false",
+              "field": "tags['owner']"
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "parameters": {
+    "budgets": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Allowed Budget Values",
+        "description": "budget tag value"
+      },
+      "defaultValue": [
+        "bau",
+        "investment"
+      ]
+    },
+    "cost_types": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Allowed Cost Type values",
+        "description": "cost_type tag value"
+      },
+      "defaultValue": [
+        "maintenance",
+        "custom_dev"
+      ]
+    },
+    "environments": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Allowed Environment values",
+        "description": "values like, production, staging.."
+      },
+      "defaultValue": [
+        "development",
+        "production",
+        "test",
+        "staging"
+      ]
+    },
+    "products": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Allowed Products",
+        "description": "product tag value"
+      },
+      "defaultValue": [
+        "shared"
+      ]
+    }
+  }
+}
